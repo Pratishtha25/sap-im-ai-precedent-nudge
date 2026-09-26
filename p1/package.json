@@ -1,0 +1,19 @@
+{
+  "name": "sap-im-precedent-service",
+  "version": "0.5.0",
+  "private": true,
+  "description": "Incident Precedent Nudge — P1–P5 (matching, AI, UI API, feedback, pilot)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "backfill": "node scripts/backfill.js",
+    "compute": "node scripts/compute-all.js",
+    "eval": "node eval/run-eval.js",
+    "test": "node --test test/*.test.js",
+    "seed": "node scripts/seed.js",
+    "loadtest": "node scripts/loadtest-get.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "currentId": "388",
+    "expectedMatchId": "347",
+    "label": "positive_same_location_conveyor_guard",
+    "notes": "Should match historical guard rail conveyor incident"
+  },
+  {
+    "currentId": "388",
+    "expectedMatchId": "360",
+    "label": "positive_alt_acceptable",
+    "notes": "Alternate acceptable high-rank candidate (either 347 or 360 OK for recall)"
+  },
+  {
+    "currentId": "390",
+    "expectedMatchId": null,
+    "expectFalseDupMin": 1,
+    "label": "false_dup_warehouse_chemical",
+    "notes": "Should surface State B from NOT_VALID/DUPLICATE pool; State A should not promote those"
+  },
+  {
+    "currentId": "391",
+    "expectedMatchId": null,
+    "label": "negative_new_pattern",
+    "notes": "New location/equipment — expect State C"
+  }
+]

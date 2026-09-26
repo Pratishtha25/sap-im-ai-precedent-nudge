@@ -1,0 +1,11 @@
+{
+  "name": "sap-im-precedent-p0",
+  "version": "0.1.0",
+  "private": true,
+  "description": "P0 spike PoCs for Incident Precedent Nudge (ID extraction + deep link intent)",
+  "scripts": {
+    "test": "node poc/incident-id/run-tests.js && node poc/deep-link/run-tests.js",
+    "test:incident-id": "node poc/incident-id/run-tests.js",
+    "test:deep-link": "node poc/deep-link/run-tests.js"
+  }
+}

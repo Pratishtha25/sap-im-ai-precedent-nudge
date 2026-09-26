@@ -1,0 +1,8 @@
+reports/week-*-readout.md
+reports/week-*-readout.json
+reports/go-no-go-recommendation.md
+reports/go-no-go-recommendation.json
+reports/threshold-changelog.md
+reports/loadtest-last-report.json
+!reports/pilot-results-report.md
+!reports/survey-summary.json

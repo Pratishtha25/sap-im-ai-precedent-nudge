@@ -1,0 +1,15 @@
+{
+  "name": "sap-im-precedent-p5-pilot",
+  "version": "0.5.0",
+  "private": true,
+  "description": "P5 pilot operations — cohort, weekly readout, go/no-go",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "readout": "node scripts/weekly-readout.js",
+    "go-no-go": "node scripts/go-no-go.js reports/survey-summary.json",
+    "threshold": "node scripts/adjust-threshold.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

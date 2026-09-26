@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-08-05T17:07:54.160Z",
+  "base": "http://127.0.0.1:4001",
+  "incidentId": "388",
+  "requests": 200,
+  "concurrency": 20,
+  "ok": 200,
+  "fail": 0,
+  "elapsedMs": 165,
+  "rps": 1212.1,
+  "latencyMs": {
+    "p50": 12,
+    "p95": 62,
+    "p99": 67,
+    "max": 68
+  },
+  "llmOnGet": false,
+  "note": "GET handler records audit llmCalled:false; no orchestrator.complete on read path"
+}

@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Runtime / local data
+p1/data/store.json
+p1/data/.eval-store.json
+p1/eval/eval-report.json
+*.log
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+**/credentials*.json
+**/secrets*.json
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Build / coverage
+coverage/
+dist/
+.cache/

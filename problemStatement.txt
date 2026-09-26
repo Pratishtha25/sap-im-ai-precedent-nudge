@@ -1,0 +1,74 @@
+Problem Statement: AI-Assisted Incident Precedent Nudge (My Inbox)
+1. Problem Statement
+
+When an Incident Manager opens an incident review task in My Inbox, they have no visibility into whether this type of incident has occurred before, how it was investigated, what root cause was identified, or what corrective action was taken. This forces every investigation to start from zero — even when the organization has already solved this exact problem, sometimes multiple times, at the same location. The knowledge of "we've seen this before" currently lives only in the memory of experienced staff, which means it's inconsistent, undocumented, and lost when that person leaves or is simply unavailable. This also means recurring incidents can go unrecognized as a pattern, since each one is investigated in isolation.
+
+2. Objective
+
+Give the Incident Manager relevant historical context — a matching past incident, its investigation outcome, and its RCA — at the exact moment they begin reviewing a new incident in My Inbox, with a single click to the full record. As a secondary capability, flag incidents that resemble past reports later found to be false or invalid, so obviously non-incidents don't consume full investigation effort.
+
+3. Target user
+
+Incident Manager, acting inside the My Inbox Fiori app, at the point of reviewing/completing an assigned incident workflow task.
+
+4. Current state (today, without this feature)
+Step	What happens today
+Incident Manager opens My Inbox	Sees task: "Review and complete incident"
+Selects the task	Sees incident details only — description, location, category, reporter
+Manager decides next step	Relies entirely on personal memory or manually searches Manage Incidents app for similar past cases (often skipped due to time pressure)
+Investigation begins	Started from scratch, even if an identical incident was closed six months ago at the same location
+5. Proposed solution — MVP scope
+
+When the Incident Manager selects an incident task in My Inbox, a message panel appears directly below the incident details, before any other action is taken.
+
+5.1 Exact UX flow (MVP)
+My Inbox list view — task appears as normal: "Review and complete incident" with existing metadata (no change to list view for MVP).
+Manager selects the task → incident detail panel loads as it does today.
+New: Precedent panel renders below the incident details, one of three states: State A — Match found:
+
+"This kind of incident has happened before. For reference, you may check Incident INC-2024-00347, which had a similar description and location. [Open in Manage Incidents →]"
+
+One-line summary: root cause identified + corrective action taken (e.g. "Root cause: guard rail missing on conveyor. Action taken: guard installed, verified 03 Mar 2025.")
+
+State B — Possible false/duplicate incident:
+
+"⚠ This report resembles [N] past incidents at this location that were later closed as not valid / duplicate. Please verify the details before proceeding with investigation."
+
+State C — No match found:
+
+No panel shown, or a lightweight "No similar past incidents found — this may be a new pattern" note (keeps the manager from wondering if the feature is broken).
+
+Manager clicks the link → deep-navigates directly into the Manage Incidents app, opened to that specific historical incident record (not a search results list).
+Manager proceeds with their own review/investigation as normal — the panel is advisory only; it does not pre-fill or auto-complete any field in the current incident.
+5.2 What's deliberately excluded from the message (MVP guardrail)
+
+The panel shows where to look, not a conclusion to copy. It does not auto-fill the new incident's category, RCA, or closure fields from the matched incident — that decision stays with the Incident Manager. This matters both for investigation quality and because OSHA recordkeeping requires an actual investigation, not a copied one.
+
+6. Functional requirements
+#	Requirement
+FR1	On incident creation, an AI service categorizes the incident (type, severity, recordability signal) using description + structured fields
+FR2	The system searches historical closed incidents for matches, filtered first by location/equipment/category, then ranked by description similarity
+FR3	Match confidence must exceed a configurable threshold before any panel is shown — no panel for weak/low-confidence matches (avoids noise)
+FR4	If a match is found, the system retrieves that incident's root cause and corrective action (from linked investigation/CAPA data) and generates a one-line, plain-language summary
+FR5	The panel renders inside the My Inbox task view, positioned directly below the standard incident detail fields — no separate app or tab
+FR6	The incident reference number in the panel is a working deep link that opens the exact historical incident in Manage Incidents, not a search
+FR7	Separately from the precedent match, the system checks whether similar past reports at this location were closed as "not valid"/"duplicate," and if so, surfaces a distinct warning-style message
+FR8	The panel must clearly distinguish itself as AI-generated advisory content (visually and in wording) — never presented as a system-verified fact
+FR9	Manager can dismiss/mark the suggestion "not relevant" — this feedback is logged for future match-quality tuning (not required to block MVP, but the field should be captured even if unused in v1)
+7. Non-functional requirements
+Latency: panel should render within the same load time as the existing incident detail view — a multi-second delay will train managers to ignore or skip it.
+Governance: AI processing must run within SAP's governed AI layer (SAP AI Core / Generative AI Hub) so incident data doesn't leave the SAP landscape — likely to be a hard requirement from IT/legal given how sensitive incident data is.
+Graceful degradation: if the AI service is unavailable, the incident task must still open and function normally — this is an enhancement layer, never a blocker.
+8. Technical dependencies (flag these early)
+My Inbox extensibility: confirm with your Fiori/UX5 technical lead how the incident review task's UI is currently rendered in My Inbox (custom task UI vs. generic preview) — this determines whether the panel is added via a custom object-page section, a Flexible Workflow custom UI, or a BPMN task extension. This is the single biggest technical unknown and should be validated before committing to the MVP timeline.
+Deep link: the link into Manage Incidents needs a working semantic-object navigation (or equivalent) to a specific incident ID, not a filtered list.
+Historical data quality: matching is only as good as the investigation/RCA fields on closed incidents — a quick audit of how consistently these are filled in today should happen before scoping the matching model's expected accuracy.
+9. Success metrics (for MVP validation, not full rollout)
+% of incidents where a precedent match is shown and the manager actually clicks through
+Manager-reported time saved on investigation start (even a rough before/after estimate from a pilot group)
+% of flagged "possible false incident" warnings the manager confirms were correct
+Manager feedback: is the panel trusted, ignored, or actively disruptive?
+10. Open questions to resolve before build
+What confidence threshold is "good enough" to show a match without creating false confidence?
+Should the false-incident flag block the manager from proceeding, or purely advisory (recommend: advisory only for MVP — don't let AI gate a workflow step)?
+Who owns tuning the matching logic post-launch — is there a real feedback loop resourced, or is FR9 logged-but-unused for now?

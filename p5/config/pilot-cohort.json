@@ -1,0 +1,44 @@
+{
+  "pilotId": "ehs-im-precedent-pilot-2026q3",
+  "name": "EHS Incident Precedent Nudge — MVP Pilot",
+  "status": "READY_TO_START",
+  "startDate": null,
+  "endDateTargetWeeks": 4,
+  "featureFlag": {
+    "mode": "pilot_only",
+    "comment": "When mode=pilot_only, panel serves READY only for allow-listed users and/or locations. Use mode=all to open broadly after go decision."
+  },
+  "cohort": {
+    "plants": [
+      {
+        "locationId": "PLANT-A-LINE-3",
+        "displayName": "Plant A — Line 3 (sample)",
+        "notes": "Replace with live plant IDs from P0 audit"
+      },
+      {
+        "locationId": "PLANT-B-WH",
+        "displayName": "Plant B — Warehouse (sample)",
+        "notes": "Good false/dup signal coverage in sample data"
+      }
+    ],
+    "managers": [
+      {
+        "userId": "demo-manager",
+        "displayName": "Demo Incident Manager",
+        "plantLocationIds": ["PLANT-A-LINE-3", "PLANT-B-WH"]
+      }
+    ]
+  },
+  "successTargets": {
+    "minClickThroughRate": 0.15,
+    "maxDismissRate": 0.5,
+    "minFalseDupUsefulRate": 0.5,
+    "maxDisruptiveShareSurvey": 0.25,
+    "requireNoComplianceIssues": true
+  },
+  "contacts": {
+    "productOwner": null,
+    "ehsLead": null,
+    "engineeringOnCall": null
+  }
+}

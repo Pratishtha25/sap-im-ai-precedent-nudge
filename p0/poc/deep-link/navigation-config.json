@@ -1,0 +1,13 @@
+{
+  "semanticObject": "REPLACE_ME",
+  "action": "REPLACE_ME",
+  "incidentParamName": "IncidentID",
+  "extraParams": {},
+  "_comments": {
+    "howToFill": "Open Manage Incidents for a known ID, capture intent from App Manager / URL, then replace REPLACE_ME values.",
+    "verifiedIncidentIds": [],
+    "verifiedOn": null,
+    "landsOnExactObjectPage": null,
+    "investigationTabSupported": null
+  }
+}

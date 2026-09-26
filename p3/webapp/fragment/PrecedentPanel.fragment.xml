@@ -1,0 +1,101 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <!--
+    Shared Precedent Panel (FR5/FR7/FR8).
+    Bind to view model from StateMapper.mapPrecedentToViewModel.
+    NO Apply / Copy RCA buttons (MVP guardrail).
+  -->
+  <VBox
+    id="precedentPanelRoot"
+    visible="{precedent>/visible}"
+    class="precedentPanel"
+    role="region"
+    ariaLabelledBy="precedentDisclosure precedentTitle">
+
+    <Text
+      id="precedentBadge"
+      text="{i18n>precedent.title}"
+      class="precedentPanel__badge" />
+
+    <Text
+      id="precedentDisclosure"
+      text="{i18n>precedent.disclosure}"
+      class="precedentPanel__disclosure" />
+
+    <!-- PENDING hint (AD-7 optional) -->
+    <Text
+      visible="{precedent>/pendingHint}"
+      text="{i18n>precedent.pending.hint}"
+      class="precedentPanel__hint" />
+
+    <!-- State B -->
+    <VBox visible="{precedent>/showFalseDup}" class="precedentPanel--warning" renderType="Bare">
+      <Title
+        id="precedentTitleB"
+        level="H3"
+        titleStyle="H6"
+        text="{i18n>precedent.stateB.title}"
+        class="precedentPanel__title" />
+      <Text
+        text="{
+          parts: [
+            { path: 'i18n>precedent.stateB.body' },
+            { path: 'precedent>/falseDupCount' }
+          ],
+          formatter: '.formatFalseDup'
+        }"
+        class="precedentPanel__body" />
+      <HBox class="precedentPanel__actions">
+        <Link text="{i18n>precedent.falseDup.helpful}" press=".onFalseDupHelpful" class="precedentPanel__link" />
+        <Link text="{i18n>precedent.falseDup.notHelpful}" press=".onFalseDupNotHelpful" class="precedentPanel__link" />
+      </HBox>
+    </VBox>
+
+    <!-- State A -->
+    <VBox visible="{precedent>/showPrecedent}" renderType="Bare">
+      <Title
+        id="precedentTitle"
+        level="H3"
+        titleStyle="H6"
+        text="{i18n>precedent.title}"
+        class="precedentPanel__title" />
+      <Text
+        text="{i18n>precedent.stateA.intro}"
+        class="precedentPanel__body"
+        displayInline="true" />
+      <Link
+        text="{precedent>/matchedIncidentNumber}"
+        press=".onOpenMatchedIncident"
+        accessibleRole="Link"
+        class="precedentPanel__link"
+        wrapping="false" />
+      <Text text="." displayInline="true" />
+      <Text
+        visible="{= !!${precedent>/summaryText} }"
+        text="{precedent>/summaryText}"
+        class="precedentPanel__summary" />
+      <Text
+        visible="{precedent>/linkOnly}"
+        text="{i18n>precedent.stateA.linkOnly}"
+        class="precedentPanel__hint" />
+      <HBox class="precedentPanel__actions">
+        <Link
+          text="{i18n>precedent.stateA.openLink}"
+          press=".onOpenMatchedIncident"
+          class="precedentPanel__link" />
+        <Link
+          text="{i18n>precedent.dismiss}"
+          press=".onDismissNotRelevant"
+          class="precedentPanel__link" />
+      </HBox>
+      <Text text="{i18n>precedent.noAutoFill}" class="precedentPanel__hint" />
+    </VBox>
+
+    <!-- State C lightweight note (AD-5) -->
+    <Text
+      visible="{precedent>/showNoMatchNote}"
+      text="{i18n>precedent.stateC.note}"
+      class="precedentPanel__body" />
+  </VBox>
+</core:FragmentDefinition>
